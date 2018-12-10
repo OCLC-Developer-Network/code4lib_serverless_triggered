@@ -6,7 +6,7 @@ const dom = require('xmldom').DOMParser;
 const fs = require('fs');
 const nodeauth = require("nodeauth");
 const parse = require('csv-parse/lib/sync');
-const stringify = require('csv-stringify');
+const stringify = require('csv-stringify/lib/sync');
 const xpath = require('xpath');
 const yaml = require('js-yaml');
 
@@ -57,8 +57,18 @@ exports.handler = async (event) => {
 	  			let select = xpath.useNamespaces({"atom": "http://www.w3.org/2005/Atom", "metadata": "http://worldcat.org/metadata-api-service"});
 	  			let newIdNodes = select('//atom:content/metadata:oclcNumberRecordResult/metadata:currentOclcNumber', doc);
 	  			let newIds = newIdNodes.map(newIdNode => newIdNode.firstChild.data);
+	  			for (let index in records){
+	  				records[index]['newOCLCNum'] = newIds[index];
+	  			};
+	            // Create CSV string
+	            	let columns = {
+	            			oclcnumber: "Original OCLC Number",
+	            			newOCLCNum: "New OCLC Number"
+	            	};
+	            	let csv_string = stringify(records, {header: true, columns: columns});
+	            	
 	  			try {
-	  				let result = await s3.putObject({Bucket: bucket, Key: dstKey, Body: ids.join(",")}).promise();
+	  				let result = await s3.putObject({Bucket: bucket, Key: dstKey, Body: csv_string}).promise();
 	  			    	console.log('success')
 	  				return { status: 'success' }  
 	  			} catch (Error) {
