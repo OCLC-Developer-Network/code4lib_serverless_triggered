@@ -1,3 +1,5 @@
 /.serverless/
 /node_modules/
 /.project
+/prod_config.yml
+/prod_config_encrypted.txt
