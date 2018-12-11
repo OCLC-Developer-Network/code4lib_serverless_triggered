@@ -22,7 +22,15 @@ $ npm install
 ```
 
 ### Step 3: Configure application
-Copy example_config.yml to prod_config.yml . Open prod_config.yml and edit to include:
+1. Request a WSKey for WorldCat Metadata API - http://platform.worldcat.org/wskey/
+- a Sandbox WSKey will work fine for this demo
+
+2. Copy example_config.yml to prod_config.yml . Open prod_config.yml and edit to include:
+- wskey
+- secret
+- principalID 
+- principalIDNS
+- institution
 
 ### Step 4: AWS Setup
 
