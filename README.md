@@ -58,7 +58,7 @@ $ aws kms encrypt --key-id {key-id} --plaintext fileb://prod_config.yml --output
 1. Use the AWS Console to create a bucket. Note your bucket name!!!
 2. Add a sample csv file of OCLC Numbers to the bucket.
 
-### Step 8: Test application
+### Step 7: Test application
 1. Alter s3_event.json to point to your bucket and your sample csv file.
 
 2. Use serverless to test locally
