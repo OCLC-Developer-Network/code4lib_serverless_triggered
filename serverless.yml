@@ -1,5 +1,9 @@
 service: 
     name: trigger-test
+
+custom:
+  bucket: test-bucket-for-csvs
+
 provider:
  name: aws
  runtime: nodejs8.10
@@ -7,7 +11,23 @@ provider:
  timeout: 10
  stage: production
  region: us-east-1
+ iamRoleStatements:
+    - Effect: Allow
+      Action:
+       - kms:Decrypt
+      Resource: { "Fn::Join" : ["", ["arn:aws:kms:${self:provider.region}:", { "Ref" : "AWS::AccountId" }, ":key/662c685a-51e7-45a7-ad0d-478863112001" ] ]  }
+    - Effect: Allow
+      Action:
+       - s3:PutObject
+      Resource: arn:aws:s3:::${self:custom.bucket}/*    
 
 functions:
     checkOCLCNumber: 
         handler: index.handler
+        
+resources:
+  Resources:
+    CSVBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:custom.bucket}      
