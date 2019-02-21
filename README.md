@@ -1,8 +1,8 @@
-#Triggered Lambda
+# Triggered Lambda
 
 Custom application looks for new CSV files in an S3 bucket and uses the OCLC Number data within to look for present OCLC Number for each
 
-##Installing Locally
+## Installing Locally
 
 ### Step 1: Clone the repository
 Clone this repository
